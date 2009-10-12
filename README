@@ -1,0 +1,29 @@
+This bundle adds two views to any Eclipse application, however
+these views are not added to any perspective by defautl.
+
+To display them, use the Show Views menu item or the command shortcut
+(Shift Alt Q Q).
+
+The views are displaying the same underlying model which contains 10000
+elements under a single node but one of them has an ILazyTreeContentProvider
+while the other thas a ITreeContentProvider.
+
+The behavior of both views works as expected under GNU/Linux (GTK backend),
+that is that the LazyView node is quicker to expand, but the scrollbar feels
+very lightly slower, and the standard content provider takes time to open
+the node, but the scrollbar feels very light since all the TreeItems are in
+memory.
+
+However, the bug happens on Windows (tested on Windows XP) for both 
+content providers.
+ * The ILazyTreeContent provider is completely unusable, first there is a
+refresh bug when expanding the node (the tree view becomes blank), then
+the scrollbar feels extremely heavy and unusable.
+ * The scrollbar problem is resolved using an ITreeContentProvider.
+ * With both content providers, the selection of an element or navigating
+using keyboards arrows is very sluggish and seems to "lag" behind user actions.
+
+
+I have been unable to identify the source of the problem (mainly because I
+don't know JFace/SWT internals well enough), but having this fixed would be
+great.
